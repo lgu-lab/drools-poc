@@ -1,0 +1,10 @@
+package org.demo.drools.pojo;
+global String topicLevel
+rule "Account checking"
+
+when
+  $account : Account( amount < 200 )
+
+then
+  System.out.println("Warning on account '" + $account.getId() + "' : less than 200 !");
+end

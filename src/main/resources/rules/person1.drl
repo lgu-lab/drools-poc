@@ -1,0 +1,15 @@
+package org.demo.drools.pojo;
+global String topicLevel
+rule "Hello"
+salience 100
+when
+  $person : Person( topic == "Drools" )
+
+then
+  System.out.println($person.introduceYourself() + " ( global topic level is " + getDefaultIfNull(topicLevel) + " )");
+
+end
+
+function String getDefaultIfNull(String topicLevel) {
+  return topicLevel == null ? "Moderate" : topicLevel;
+}

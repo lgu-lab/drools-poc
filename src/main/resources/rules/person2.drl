@@ -1,0 +1,103 @@
+package org.demo.drools.pojo;
+
+//------------------------------------------------------------------
+rule "person2-inter-step29"
+salience 29
+when
+then
+  printInterStep();
+end
+
+//------------------------------------------------------------------
+// List all instances of 'Person' 
+//------------------------------------------------------------------
+rule "person2-list-all"
+salience 28 
+when
+  $person1 : Person() // no condition => all ( 5 Persons in context => 5 occurrences )
+then
+  System.out.println("List all persons : Person : " + $person1  );
+end
+
+//------------------------------------------------------------------
+rule "person2-inter-step27"
+salience 27
+when
+then
+  printInterStep();
+end
+
+//------------------------------------------------------------------
+// List same instances of 'Person' : each instance equals with itself (4) + 2 x "Joe" --> 6
+//------------------------------------------------------------------
+rule "person2-equality1"
+salience 26
+when
+  $person1 : Person()
+  $person2 : Person( $person1 == $person2 ) // same => 5 Persons in context => 7 occurrences ( 5 object with itself + 2 identical )
+  // equals calls : 16 ( 4 x 4 Persons )
+then
+  System.out.println("Equality with '==' : " + $person1 + " == " + $person2 );
+end
+
+//------------------------------------------------------------------
+rule "person2-inter-step25"
+salience 25
+when
+then
+  printInterStep();
+end
+
+//------------------------------------------------------------------
+// 
+//------------------------------------------------------------------
+rule "person2-24"
+salience 24
+when
+  $person1 : Person( $name1 : name )
+//  $person2 : Person( $name2 : name , $person1.name == $person2.name )  
+  $person2 : Person( $person1 != $person2 )
+then
+//  System.out.println("Same 'name' : " + $name1 + " == " + $name2 );
+  System.out.println("Not equals : " + $person1 + " == " + $person2 );
+end
+
+//------------------------------------------------------------------
+rule "person2-inter-step24"
+salience 23
+when
+then
+  printInterStep();
+end
+
+//------------------------------------------------------------------
+rule  "person2-equality3"
+salience 22
+when
+  // For each pair Person - Person  ( N Persons in context => N x N occurrences )
+  $person1 : Person()
+  $person2 : Person()
+then
+  System.out.println("All pair : " + $person1 + " with " + $person2 );
+end
+
+//------------------------------------------------------------------
+rule "person2-inter-step21"
+salience 21
+when
+then
+  printInterStep();
+end
+
+//------------------------------------------------------------------
+
+function void printInterStep() {
+  System.out.println("--------------------------" );
+  System.out.println("INTER STEP INFO : " );
+  System.out.println(" Counters.equals : " + Counters.equals );
+  System.out.println(" Counters.hashCode : " + Counters.hashCode );
+  System.out.println("--------------------------" );
+  Counters.equals = 0;
+  Counters.hashCode = 0;
+}
+
